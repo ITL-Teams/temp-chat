@@ -1,0 +1,27 @@
+{
+  "name": "tempchat",
+  "version": "1.0.0",
+  "description": "Application to create temporale chat with people",
+  "scripts": {
+    "start": "node server/index.js",
+    "dev": "nodemon server/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ITL-Teams/temp-chat.git"
+  },
+  "author": "Angel Ricardo Ramírez de la Torre",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ITL-Teams/temp-chat/issues"
+  },
+  "homepage": "https://github.com/ITL-Teams/temp-chat#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "express-ws": "^4.0.0",
+    "uuid": "^8.3.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.6"
+  }
+}
