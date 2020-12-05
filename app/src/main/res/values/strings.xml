@@ -3,6 +3,7 @@
 
     <string name="message">Write Something</string>
     <string name="send">Send</string>
+    <string name="disconnect">Disconnect</string>
     <string name="userName">User Name</string>
     <string name="encryptionKey">Encryption Key </string>
     <string name="connect">Connect</string>
