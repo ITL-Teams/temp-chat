@@ -1,11 +1,20 @@
 <resources>
     <string name="app_name">TempChat</string>
+
     <string name="message">Write Something</string>
     <string name="send">Send</string>
     <string name="userName">User Name</string>
     <string name="encryptionKey">Encryption Key </string>
     <string name="connect">Connect</string>
-    <string name="codeChat">Code Chat Room</string>
+    <string name="codeChat">Chat Room Code</string>
     <string name="titleApp">TEMP-CHAT</string>
     <string name="sendMessage">New Message</string>
+
+    <string name="emptyField">Empty Field</string>
+    <string name="emptyChatCodeAlert">Chat code cannot be empty</string>
+    <string name="emptyUserNameAlert">Username cannot be empty</string>
+    <string name="emptyEncryptionKeyAlert">Encryption key cannot be empty</string>
+
+    <string name="failedToConnectTitle">Failed to connect</string>
+    <string name="failedToConnectMessage">Failed to connect with server after 10 seconds</string>
 </resources>
