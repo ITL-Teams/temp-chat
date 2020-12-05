@@ -22,9 +22,7 @@ public class ChatWebSocketListener extends WebSocketListener {
                   onCloseHandler,
                   onFailureHandler;
 
-  public ChatWebSocketListener(
-          MainActivity context
-  ) {
+  public ChatWebSocketListener() {
     messageFormatter = new MessageFormatter();
     logger = new Logger(ChatWebSocketListener.class);
   }
