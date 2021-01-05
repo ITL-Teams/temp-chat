@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">TempChat</string>
 
-    <string name="message">Write Something</string>
+    <string name="message">Type Something</string>
     <string name="send">Send</string>
     <string name="disconnect">Disconnect</string>
     <string name="userName">User Name</string>
