@@ -8,7 +8,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.os.Parcelable;
 import android.view.View;
 import android.widget.EditText;
 
@@ -16,11 +15,13 @@ import com.example.tempchat.service.ChatWebSocketListener;
 import com.example.tempchat.service.SocketUtils;
 
 public class MainActivity extends AppCompatActivity {
-  private SocketUtils socket;
-  private ChatWebSocketListener socketListener;
+  public static SocketUtils socket;
+  public static ChatWebSocketListener socketListener;
   private EditText chatCode,
                    username,
                    encryptionKey;
+  private Handler socketOnConnect,
+                  socketOnFailure;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -31,8 +32,8 @@ public class MainActivity extends AppCompatActivity {
     username = (EditText) findViewById(R.id.username);
     encryptionKey = (EditText) findViewById(R.id.encryptionKey);
 
-    Handler socketOnConnect = new SocketOnConnect();
-    Handler socketOnFailure = new SocketOnFailure();
+    socketOnConnect = new SocketOnConnect();
+    socketOnFailure = new SocketOnFailure();
 
     socketListener = new ChatWebSocketListener();
     socketListener.setOnOpenHandler(socketOnConnect);
@@ -86,11 +87,13 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void handleMessage(@NonNull Message msg) {
       Intent goToChat = new Intent(getApplicationContext(), ChatActivity.class);
-      //goToChat.putExtra("socket", (Parcelable) socket);
-      //goToChat.putExtra("socketListener", (Parcelable) socketListener);
       goToChat.putExtra("username", username.getText().toString());
       goToChat.putExtra("encryptionKey", encryptionKey.getText().toString());
       goToChat.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+      socketListener.setOnOpenHandler(null);
+      socketListener.setOnFailureHandler(null);
+
       getApplicationContext().startActivity(goToChat);
     }
   }
