@@ -2,7 +2,6 @@ package com.example.tempchat.service;
 
 import android.os.Handler;
 
-import com.example.tempchat.MainActivity;
 import com.example.tempchat.model.ChatMessage;
 import com.example.tempchat.utils.Logger;
 import com.example.tempchat.utils.MessageFormatter;
