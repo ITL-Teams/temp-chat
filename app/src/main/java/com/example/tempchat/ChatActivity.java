@@ -57,18 +57,17 @@ public class ChatActivity extends AppCompatActivity {
     chat.setDividerHeight(0);
     chat.setOnItemClickListener((parent, view, position, id) -> {
       ChatMessage message = messages.getChatMessage(position);
-
-      if(message.getUserId().equals(GlobalConfig.userId))
-        displayDeleteMessageAlert(
-                this.getString(R.string.delete_message_title),
-                this.getString(R.string.delete_message_body),
-                R.drawable.trash,
-                (dialog, which) -> {
-                  messages.remove(message);
-                  Toast.makeText(this, R.string.message_deleted, Toast.LENGTH_SHORT).show();
-                },
-                message.isDeleted() ? null : (dialog, which) -> socketUtils.deleteMessage(message)
-        );
+      displayDeleteMessageAlert(
+        this.getString(R.string.delete_message_title),
+        this.getString(R.string.delete_message_body),
+        R.drawable.trash,
+        (dialog, which) -> {
+          messages.remove(message);
+          Toast.makeText(this, R.string.message_deleted, Toast.LENGTH_SHORT).show();
+        },
+        message.isDeleted() || !message.getUserId().equals(GlobalConfig.userId) ?
+                null : (dialog, which) -> socketUtils.deleteMessage(message)
+      );
     });
 
     socketListener.setOnMessageHandler(socketOnMessage);
