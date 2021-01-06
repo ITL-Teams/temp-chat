@@ -70,6 +70,15 @@ public class ChatActivity extends AppCompatActivity {
 
   public void disconnect(View view) {
     Intent intentMainActivity = new Intent(this, MainActivity.class);
+
+    // delete user messages on disconnect
+    for(int index = 0; index < messages.getCount(); index++) {
+      ChatMessage message = (ChatMessage) messages.getItem(index);
+
+      if(message.getUserId().equals(GlobalConfig.userId))
+        socketUtils.deleteMessage(message);
+    }
+
     socketUtils.disconnect();
     messages.clear();
     startActivity(intentMainActivity);

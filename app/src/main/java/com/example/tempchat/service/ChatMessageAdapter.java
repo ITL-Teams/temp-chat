@@ -69,6 +69,8 @@ public class ChatMessageAdapter extends ArrayAdapter {
 
   public void remove(ChatMessage message, String deleteMessage) {
     int index = list.indexOf(message);
+    if(index == -1) return;
+
     ChatMessage current_message = list.get(index);
     current_message.delete(deleteMessage);
 
