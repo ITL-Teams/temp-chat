@@ -38,48 +38,55 @@
     </LinearLayout>
 
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight=".6"
-        android:orientation="vertical">
-
-        <LinearLayout
+     <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight=".4"
             android:orientation="vertical">
 
-            <EditText
-                android:id="@+id/chatCode"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight=".1"
-                android:ems="10"
-                android:hint="@string/codeChat"
-                android:inputType="textPersonName" />
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp">
+        <EditText
+            android:id="@+id/chatCode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:ems="10"
+            android:hint="@string/codeChat"
+            android:inputType="textPersonName" />
+    </com.google.android.material.textfield.TextInputLayout>
 
-            <EditText
-                android:id="@+id/username"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight=".1"
-                android:ems="10"
-                android:hint="@string/userName"
-                android:inputType="textPersonName" />
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <EditText
+            android:id="@+id/username"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:ems="10"
+            android:hint="@string/userName"
+            android:inputType="textPersonName" />
+    </com.google.android.material.textfield.TextInputLayout>
 
-            <EditText
-                android:id="@+id/encryptionKey"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight=".1"
-                android:ems="10"
-                android:hint="@string/encryptionKey"
-                android:inputType="textPassword" />
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <EditText
+            android:id="@+id/encryptionKey"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:ems="10"
+            android:hint="@string/encryptionKey"
+            android:inputType="textPassword" />
+    </com.google.android.material.textfield.TextInputLayout>
 
-        </LinearLayout>
+    </LinearLayout>
 
-        <LinearLayout
+    <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight=".2"
@@ -94,9 +101,6 @@
                 android:text="@string/connect"
                 app:backgroundTint="@color/purple_200"
                 app:iconTint="@color/white" />
-
-        </LinearLayout>
-
 
     </LinearLayout>
 
