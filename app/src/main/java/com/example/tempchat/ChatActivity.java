@@ -3,21 +3,29 @@ package com.example.tempchat;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.widget.ArrayAdapter;
+import android.view.View;
+import android.widget.EditText;
 import android.widget.ListView;
 
+import com.example.tempchat.model.ChatMessage;
+import com.example.tempchat.service.ChatMessageAdapter;
 import com.example.tempchat.service.ChatWebSocketListener;
 import com.example.tempchat.service.SocketUtils;
+import com.example.tempchat.utils.GlobalConfig;
 import com.example.tempchat.utils.MessageFormatter;
+
+import java.util.ArrayList;
 
 public class ChatActivity extends AppCompatActivity {
   private ListView chat;
+  private EditText message;
   private SocketUtils socketUtils;
   private ChatWebSocketListener socketListener;
-  private ArrayAdapter<String> messages;
+  private ChatMessageAdapter messages;
   private Handler socketOnMessage,
                   socketOnClose;
 
@@ -26,16 +34,36 @@ public class ChatActivity extends AppCompatActivity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_chat);
 
-    socketUtils = MainActivity.socket;
-    socketListener = MainActivity.socketListener;
+    socketUtils = GlobalConfig.socket;
+    socketListener = GlobalConfig.socketListener;
     socketOnMessage = new MessageHandler();
 
-    messages = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1);
+    message = (EditText) findViewById(R.id.message);
+    messages = new ChatMessageAdapter(this, new ArrayList<ChatMessage>());
 
     chat = (ListView) findViewById(R.id.chat);
+    chat.invalidateViews();
     chat.setAdapter(messages);
+    chat.setDivider(null);
+    chat.setDividerHeight(0);
 
     socketListener.setOnMessageHandler(socketOnMessage);
+  }
+
+  public void disconnect(View view) {
+    Intent intentMainActivity = new Intent(this, MainActivity.class);
+    socketUtils.disconnect();
+    messages.clear();
+    startActivity(intentMainActivity);
+  }
+
+  public void sendMessage(View view) {
+    ChatMessage message = new ChatMessage(
+      GlobalConfig.username,
+      this.message.getText().toString()
+    );
+    socketUtils.sendMessage(message);
+    this.message.setText("");
   }
 
   class MessageHandler extends Handler {
@@ -43,9 +71,7 @@ public class ChatActivity extends AppCompatActivity {
     public void handleMessage(@NonNull Message msg) {
       System.out.println("ON message");
       MessageFormatter messageFormatter = new MessageFormatter(msg);
-      String text = "Username: " + messageFormatter.getChatMessage().getUserName() + "\n";
-      text += "Message: " + messageFormatter.getChatMessage().getContent();
-      messages.add(text);
+      messages.add(messageFormatter.getChatMessage());
     }
   }
 }

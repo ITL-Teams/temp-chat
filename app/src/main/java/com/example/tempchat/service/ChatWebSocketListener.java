@@ -64,6 +64,7 @@ public class ChatWebSocketListener extends WebSocketListener {
       );
     } catch (JSONException jsonException) {
       logger.error(jsonException.getMessage());
+      messageFormatter.putText(data); // OnConnect get clientId
     }
 
     if(onMessageHandler != null)

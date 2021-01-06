@@ -30,8 +30,8 @@ function getError(message) {
   if (!isValidJson(message)) return "content must be json";
 
   message = JSON.parse(message);
-  if (!hasUserName(message)) return "message.username must be string";
-  if (!hasContent(message)) return "message.content must be string";
+  if (!hasUserName(message)) return "username must be string";
+  if (!hasContent(message)) return "content must be string";
   return;
 }
 

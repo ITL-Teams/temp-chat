@@ -13,10 +13,12 @@ import android.widget.EditText;
 
 import com.example.tempchat.service.ChatWebSocketListener;
 import com.example.tempchat.service.SocketUtils;
+import com.example.tempchat.utils.GlobalConfig;
+import com.example.tempchat.utils.MessageFormatter;
 
 public class MainActivity extends AppCompatActivity {
-  public static SocketUtils socket;
-  public static ChatWebSocketListener socketListener;
+  private SocketUtils socket;
+  private ChatWebSocketListener socketListener;
   private EditText chatCode,
                    username,
                    encryptionKey;
@@ -36,10 +38,13 @@ public class MainActivity extends AppCompatActivity {
     socketOnFailure = new SocketOnFailure();
 
     socketListener = new ChatWebSocketListener();
-    socketListener.setOnOpenHandler(socketOnConnect);
+    socketListener.setOnMessageHandler(socketOnConnect);
     socketListener.setOnFailureHandler(socketOnFailure);
 
     socket = new SocketUtils(socketListener);
+
+    GlobalConfig.socket = socket;
+    GlobalConfig.socketListener = socketListener;
   }
 
   public void connect(View view) {
@@ -86,13 +91,18 @@ public class MainActivity extends AppCompatActivity {
   private class SocketOnConnect extends Handler {
     @Override
     public void handleMessage(@NonNull Message msg) {
+      MessageFormatter messageFormatter = new MessageFormatter(msg);
       Intent goToChat = new Intent(getApplicationContext(), ChatActivity.class);
-      goToChat.putExtra("username", username.getText().toString());
-      goToChat.putExtra("encryptionKey", encryptionKey.getText().toString());
+
+      GlobalConfig.username = username.getText().toString();
+      GlobalConfig.encryptionKey = encryptionKey.getText().toString();
+      GlobalConfig.chatCode = chatCode.getText().toString();
+      GlobalConfig.userId = messageFormatter.getText();
+
       goToChat.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
-      socketListener.setOnOpenHandler(null);
       socketListener.setOnFailureHandler(null);
+      socketListener.setOnMessageHandler(null);
 
       getApplicationContext().startActivity(goToChat);
     }
