@@ -57,11 +57,12 @@ public class ChatWebSocketListener extends WebSocketListener {
     logger.debug("data: " + data);
 
     try {
-      messageFormatter.putChatMessage(
-        ChatMessage.fromJson(
-          new JSONObject(data)
-        )
-      );
+      ChatMessage chatMessage = ChatMessage.fromJson(new JSONObject(data));
+
+      if(chatMessage.isADeleteMessage())
+        messageFormatter.putDeleteMessage(chatMessage);
+      else
+        messageFormatter.putChatMessage(chatMessage);
     } catch (JSONException jsonException) {
       logger.error(jsonException.getMessage());
       messageFormatter.putText(data); // OnConnect get clientId

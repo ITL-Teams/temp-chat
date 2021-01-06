@@ -57,6 +57,15 @@ public class SocketUtils {
     }
   }
 
+  public void deleteMessage(ChatMessage chatMessage) {
+    try {
+      ws.send(chatMessage.deleteMessageToJson().toString());
+    } catch (JSONException jsonException) {
+      logger.error("Disconnected from server: " + jsonException.getMessage());
+      ws.close(SocketStatus.CLOSE_GOING_AWAY, jsonException.getMessage());
+    }
+  }
+
 }
 
 class SocketStatus {

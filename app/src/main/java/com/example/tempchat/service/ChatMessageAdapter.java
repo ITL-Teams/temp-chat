@@ -1,11 +1,14 @@
 package com.example.tempchat.service;
 
 import android.app.Activity;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+
+import androidx.annotation.Nullable;
 
 import com.example.tempchat.R;
 import com.example.tempchat.model.ChatMessage;
@@ -38,9 +41,6 @@ public class ChatMessageAdapter extends ArrayAdapter {
 
     // Get a new instance of the row layout view
     LayoutInflater inflater = activity.getLayoutInflater();
-    System.out.println(chatMessage.getUserId().equals(GlobalConfig.userId));
-    System.out.println("OnMessage   : " + chatMessage.getUserId());
-    System.out.println("GlobalConfig: " + GlobalConfig.userId);
     if (chatMessage.getUserId().equals(GlobalConfig.userId))
       rowView = inflater.inflate(R.layout.chat_message_2, null);
     else
@@ -53,6 +53,9 @@ public class ChatMessageAdapter extends ArrayAdapter {
     view.date = (TextView) rowView.findViewById(R.id.date);
     view.time = (TextView) rowView.findViewById(R.id.time);
 
+    if(chatMessage.isDeleted())
+      view.content.setTypeface(null, Typeface.BOLD_ITALIC);
+
     rowView.setTag(view);
 
     /** Set data to your Views. */
@@ -62,6 +65,20 @@ public class ChatMessageAdapter extends ArrayAdapter {
     view.time.setText(chatMessage.getTime());
 
     return rowView;
+  }
+
+  public void remove(ChatMessage message, String deleteMessage) {
+    int index = list.indexOf(message);
+    ChatMessage current_message = list.get(index);
+    current_message.delete(deleteMessage);
+
+    list.remove(current_message);
+    list.add(index, current_message);
+    notifyDataSetChanged();
+  }
+
+  public ChatMessage getChatMessage(int position) {
+    return list.get(position);
   }
 
   protected static class ViewHolder {

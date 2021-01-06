@@ -23,6 +23,7 @@ router.ws("/chat/:channel", function (ws, req) {
       current_time = new Date();
       message = JSON.parse(message);
       message.user_id = ws.clientId;
+      message.message_id = uuid();
       message.date = DateFormatter.getDateFormatted(current_time);
       message.time = DateFormatter.getTimeFormatted(current_time);
       message = JSON.stringify(message);

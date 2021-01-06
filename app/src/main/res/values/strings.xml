@@ -18,4 +18,10 @@
 
     <string name="failedToConnectTitle">Failed to connect</string>
     <string name="failedToConnectMessage">Failed to connect with server after 10 seconds</string>
+
+    <string name="delete_message_title">Delete Message</string>
+    <string name="delete_message_body">Do you really want to delete?</string>
+    <string name="delete_message_positive_answer">Yes</string>
+    <string name="delete_message_negative_answer">No</string>
+    <string name="message_deleted">Message Deleted</string>
 </resources>

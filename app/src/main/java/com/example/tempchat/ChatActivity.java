@@ -1,8 +1,10 @@
 package com.example.tempchat;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -46,6 +48,17 @@ public class ChatActivity extends AppCompatActivity {
     chat.setAdapter(messages);
     chat.setDivider(null);
     chat.setDividerHeight(0);
+    chat.setOnItemClickListener((parent, view, position, id) -> {
+      ChatMessage message = messages.getChatMessage(position);
+
+      if(message.getUserId().equals(GlobalConfig.userId))
+        displayAlert(
+                this.getString(R.string.delete_message_title),
+                this.getString(R.string.delete_message_body),
+                android.R.drawable.ic_dialog_alert,
+                (dialog, which) -> socketUtils.deleteMessage(message)
+        );
+    });
 
     socketListener.setOnMessageHandler(socketOnMessage);
   }
@@ -66,12 +79,31 @@ public class ChatActivity extends AppCompatActivity {
     this.message.setText("");
   }
 
+  private void displayAlert(String alertTitle, String alertMessage, int icon, DialogInterface.OnClickListener listener) {
+    AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+
+    dialog.setTitle(alertTitle)
+          .setMessage(alertMessage)
+          .setIcon(icon)
+          .setNeutralButton(this.getString(R.string.delete_message_positive_answer),listener)
+          .setNegativeButton(this.getString(R.string.delete_message_negative_answer), null);
+
+    dialog.show();
+  }
+
   class MessageHandler extends Handler {
     @Override
     public void handleMessage(@NonNull Message msg) {
-      System.out.println("ON message");
       MessageFormatter messageFormatter = new MessageFormatter(msg);
-      messages.add(messageFormatter.getChatMessage());
+
+      if(messageFormatter.getMessageType() == MessageFormatter.MessageType.DELETE_MESSAGE) {
+        messages.remove(
+          messageFormatter.getDeleteMessage(),
+          getApplicationContext().getString(R.string.message_deleted)
+        );
+      }
+      else
+        messages.add(messageFormatter.getChatMessage());
     }
   }
 }

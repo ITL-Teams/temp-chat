@@ -5,12 +5,6 @@ import android.util.Pair;
 
 import com.example.tempchat.model.ChatMessage;
 
-enum MessageType {
-  EMPTY,
-  TEXT,
-  CHAT_MESSAGE
-}
-
 public class MessageFormatter {
   private Object content;
   private MessageType messageType;
@@ -23,6 +17,11 @@ public class MessageFormatter {
     Pair<MessageType, Object> messageContent = (Pair<MessageType, Object>) message.obj;
     messageType = messageContent.first;
     content = messageContent.second;
+  }
+
+  public void putDeleteMessage(ChatMessage deleteMessage) {
+    content = deleteMessage;
+    messageType = MessageType.DELETE_MESSAGE;
   }
 
   public void putText(String text) {
@@ -42,6 +41,13 @@ public class MessageFormatter {
     return null;
   }
 
+  public ChatMessage getDeleteMessage() {
+    if(messageType == MessageType.DELETE_MESSAGE)
+      return (ChatMessage) content;
+
+    return null;
+  }
+
   public String getText() {
     if(messageType == MessageType.TEXT)
       return (String) content;
@@ -54,6 +60,17 @@ public class MessageFormatter {
     Pair<MessageType, Object> content = new Pair<>(messageType, this.content);
     newMessage.obj = content;
     return newMessage;
+  }
+
+  public MessageType getMessageType() {
+    return messageType;
+  }
+
+  public enum MessageType {
+    EMPTY,
+    TEXT,
+    CHAT_MESSAGE,
+    DELETE_MESSAGE
   }
 
 }
