@@ -23,7 +23,7 @@ public class SocketUtils {
 
   public void connect(String chatRoom) {
     String serverUrl =
-            GlobalConfig.SOCKET_SCHEME + "://" +
+                    GlobalConfig.SOCKET_SCHEME + "://" +
                     GlobalConfig.SERVER_ADDRESS + ":" +
                     GlobalConfig.SERVER_PORT + "/chat/" +
                     chatRoom;
@@ -56,6 +56,7 @@ public class SocketUtils {
       ws.close(SocketStatus.CLOSE_GOING_AWAY, jsonException.getMessage());
     }
   }
+
 }
 
 class SocketStatus {

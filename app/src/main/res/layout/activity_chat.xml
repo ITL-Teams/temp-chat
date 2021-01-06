@@ -33,7 +33,7 @@
         android:orientation="vertical">
 
         <ListView
-            android:id="@+id/listview"
+            android:id="@+id/chat"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginTop="10dp"
@@ -89,7 +89,9 @@
                             android:layout_weight=".5"
                             android:onClick="connect"
                             android:text="@string/send"
-                            app:backgroundTint="#8454B5" />
+                            app:backgroundTint="#8454B5"
+                            android:textColor="#FFF"
+                            android:letterSpacing=".15"/>
 
                         <Button
                             android:id="@+id/disconnect"
@@ -98,7 +100,9 @@
                             android:layout_weight=".5"
                             android:onClick="disconnect"
                             android:text="@string/disconnect"
-                            app:backgroundTint="#8454B5" />
+                            app:backgroundTint="#8454B5"
+                            android:textColor="#FFF"
+                            android:letterSpacing=".15"/>
                     </LinearLayout>
 
                 </LinearLayout>
