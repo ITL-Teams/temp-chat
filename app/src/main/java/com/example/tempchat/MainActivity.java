@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.EditText;
 
 import com.example.tempchat.service.ChatWebSocketListener;
@@ -27,6 +28,10 @@ public class MainActivity extends AppCompatActivity {
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
+    // Disable App ScreenShot
+    getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE,
+                         WindowManager.LayoutParams.FLAG_SECURE);
+
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
 

@@ -10,11 +10,13 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.tempchat.model.ChatMessage;
+import com.example.tempchat.service.AES;
 import com.example.tempchat.service.ChatMessageAdapter;
 import com.example.tempchat.service.ChatWebSocketListener;
 import com.example.tempchat.service.SocketUtils;
@@ -34,6 +36,10 @@ public class ChatActivity extends AppCompatActivity {
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
+    // Disable App ScreenShot
+    getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE,
+                         WindowManager.LayoutParams.FLAG_SECURE);
+
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_chat);
 
@@ -85,9 +91,12 @@ public class ChatActivity extends AppCompatActivity {
   }
 
   public void sendMessage(View view) {
+    String message_content = this.message.getText().toString();
+    message_content = AES.encrypt(message_content, GlobalConfig.encryptionKey);
+
     ChatMessage message = new ChatMessage(
       GlobalConfig.username,
-      this.message.getText().toString()
+      message_content
     );
     socketUtils.sendMessage(message);
     this.message.setText("");
@@ -125,8 +134,13 @@ public class ChatActivity extends AppCompatActivity {
           getApplicationContext().getString(R.string.message_deleted)
         );
       }
-      else
-        messages.add(messageFormatter.getChatMessage());
+      else {
+        ChatMessage chatMessage = messageFormatter.getChatMessage();
+        String messageContent = chatMessage.getContent();
+        messageContent = AES.decrypt(messageContent, GlobalConfig.encryptionKey);
+        chatMessage.setContent(messageContent);
+        messages.add(chatMessage);
+      }
     }
   }
 }
