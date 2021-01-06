@@ -21,7 +21,8 @@
 
     <string name="delete_message_title">Delete Message</string>
     <string name="delete_message_body">Do you really want to delete?</string>
-    <string name="delete_message_positive_answer">Yes</string>
-    <string name="delete_message_negative_answer">No</string>
+    <string name="delete_for_everyone">DELETE FOR EVERYONE</string>
+    <string name="delete_for_me">DELETE FOR ME</string>
+    <string name="delete_message_negative_answer">CANCEL</string>
     <string name="message_deleted">Message Deleted</string>
 </resources>

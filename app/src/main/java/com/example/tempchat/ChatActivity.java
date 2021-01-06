@@ -12,6 +12,7 @@ import android.os.Message;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.tempchat.model.ChatMessage;
 import com.example.tempchat.service.ChatMessageAdapter;
@@ -52,11 +53,15 @@ public class ChatActivity extends AppCompatActivity {
       ChatMessage message = messages.getChatMessage(position);
 
       if(message.getUserId().equals(GlobalConfig.userId))
-        displayAlert(
+        displayDeleteMessageAlert(
                 this.getString(R.string.delete_message_title),
                 this.getString(R.string.delete_message_body),
                 android.R.drawable.ic_dialog_alert,
-                (dialog, which) -> socketUtils.deleteMessage(message)
+                (dialog, which) -> {
+                  messages.remove(message);
+                  Toast.makeText(this, R.string.message_deleted, Toast.LENGTH_SHORT).show();
+                },
+                message.isDeleted() ? null : (dialog, which) -> socketUtils.deleteMessage(message)
         );
     });
 
@@ -79,14 +84,23 @@ public class ChatActivity extends AppCompatActivity {
     this.message.setText("");
   }
 
-  private void displayAlert(String alertTitle, String alertMessage, int icon, DialogInterface.OnClickListener listener) {
+  private void displayDeleteMessageAlert(
+    String alertTitle,
+    String alertMessage,
+    int icon,
+    DialogInterface.OnClickListener deleteForMeListener,
+    DialogInterface.OnClickListener deleteForEveryoneListener
+  ) {
     AlertDialog.Builder dialog = new AlertDialog.Builder(this);
 
     dialog.setTitle(alertTitle)
           .setMessage(alertMessage)
           .setIcon(icon)
-          .setNeutralButton(this.getString(R.string.delete_message_positive_answer),listener)
+          .setPositiveButton(this.getString(R.string.delete_for_me), deleteForMeListener)
           .setNegativeButton(this.getString(R.string.delete_message_negative_answer), null);
+
+    if(deleteForEveryoneListener != null)
+      dialog.setNeutralButton(this.getString(R.string.delete_for_everyone), deleteForEveryoneListener);
 
     dialog.show();
   }
