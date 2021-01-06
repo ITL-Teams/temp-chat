@@ -62,7 +62,7 @@ public class ChatActivity extends AppCompatActivity {
         displayDeleteMessageAlert(
                 this.getString(R.string.delete_message_title),
                 this.getString(R.string.delete_message_body),
-                android.R.drawable.ic_dialog_alert,
+                R.drawable.trash,
                 (dialog, which) -> {
                   messages.remove(message);
                   Toast.makeText(this, R.string.message_deleted, Toast.LENGTH_SHORT).show();

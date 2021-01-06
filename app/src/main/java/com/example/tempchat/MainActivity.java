@@ -118,7 +118,7 @@ public class MainActivity extends AppCompatActivity {
     public void handleMessage(@NonNull Message msg) {
       String alertTitle = getApplicationContext().getString(R.string.failedToConnectTitle);
       String alertMessage = getApplicationContext().getString(R.string.failedToConnectMessage);
-      displayAlert(alertTitle, alertMessage, android.R.drawable.ic_dialog_alert);
+      displayAlert(alertTitle, alertMessage, R.drawable.cloud);
     }
   }
 }
