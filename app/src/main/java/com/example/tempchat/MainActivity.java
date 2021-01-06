@@ -60,6 +60,11 @@ public class MainActivity extends AppCompatActivity {
     socket.connect(chatCode.getText().toString());
   }
 
+  public void preferences(View view) {
+    Intent openPreferences = new Intent(getApplicationContext(), PreferencesActivity.class);
+    startActivity(openPreferences);
+  }
+
   private boolean validFields() {
     String chatCode = this.chatCode.getText().toString(),
             username = this.username.getText().toString(),

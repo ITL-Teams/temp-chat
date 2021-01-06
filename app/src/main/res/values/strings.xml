@@ -25,4 +25,14 @@
     <string name="delete_for_me">DELETE FOR ME</string>
     <string name="delete_message_negative_answer">CANCEL</string>
     <string name="message_deleted">Message Deleted</string>
+
+    <string name="user_preferences">User Preferences</string>
+    <string name="server_address">Server Address</string>
+    <string name="show_status">Show status</string>
+    <string name="server_address_info">Info: Use a custom server, or leave blank to use our servers</string>
+    <string name="delete_messages_on_disconnect">Delete messages on disconnect</string>
+    <string name="save_connection_string">Save connection string</string>
+    <string name="save_chats">Save chats on disconnect</string>
+    <string name="save_preferences">Save</string>
+    <string name="back">Back</string>
 </resources>
