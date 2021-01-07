@@ -103,12 +103,7 @@ public class ChatActivity extends AppCompatActivity {
 
     // delete user messages on disconnect
     if(GlobalConfig.DELETE_MESSAGES_ON_DISCONNECT)
-      for(int index = 0; index < messages.getCount(); index++) {
-        ChatMessage message = (ChatMessage) messages.getItem(index);
-
-        if(message.getUserId().equals(GlobalConfig.userId))
-          socketUtils.deleteMessage(message);
-      }
+      deleteAll();
 
     if(GlobalConfig.SHOW_STATUS) {
       String disconnectionMessage =
@@ -127,6 +122,37 @@ public class ChatActivity extends AppCompatActivity {
     messages.clear();
 
     finish();
+  }
+
+  public void deleteAll() {
+    for(int index = 0; index < messages.getCount(); index++) {
+      ChatMessage message = (ChatMessage) messages.getItem(index);
+
+      if(message.getUserId().equals(GlobalConfig.userId))
+        socketUtils.deleteMessage(message);
+    }
+  }
+
+  public void deleteMessages(View view) {
+    if(messages.getList().size() <= 0) {
+      Toast.makeText(
+              this,
+              this.getString(R.string.no_messages_to_delete),
+              Toast.LENGTH_LONG
+      ).show();
+      return;
+    }
+
+    displayDeleteAllMessagesAlert(
+            this.getString(R.string.delete_message_title),
+            this.getString(R.string.delete_message_body),
+            R.drawable.trash,
+            (dialog, which) -> messages.clear(),
+            (dialog, which) -> {
+              deleteAll();
+              messages.clear();
+            }
+    );
   }
 
   public void sendMessage(View view) {
@@ -155,6 +181,27 @@ public class ChatActivity extends AppCompatActivity {
           .setIcon(icon)
           .setPositiveButton(this.getString(R.string.delete_for_me), deleteForMeListener)
           .setNegativeButton(this.getString(R.string.delete_message_negative_answer), null);
+
+    if(deleteForEveryoneListener != null)
+      dialog.setNeutralButton(this.getString(R.string.delete_for_everyone), deleteForEveryoneListener);
+
+    dialog.show();
+  }
+
+  private void displayDeleteAllMessagesAlert(
+          String alertTitle,
+          String alertMessage,
+          int icon,
+          DialogInterface.OnClickListener deleteForMeListener,
+          DialogInterface.OnClickListener deleteForEveryoneListener
+  ) {
+    AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+
+    dialog.setTitle(alertTitle)
+            .setMessage(alertMessage)
+            .setIcon(icon)
+            .setPositiveButton(this.getString(R.string.delete_for_me), deleteForMeListener)
+            .setNegativeButton(this.getString(R.string.delete_message_negative_answer), null);
 
     if(deleteForEveryoneListener != null)
       dialog.setNeutralButton(this.getString(R.string.delete_for_everyone), deleteForEveryoneListener);

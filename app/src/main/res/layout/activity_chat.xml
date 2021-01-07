@@ -29,9 +29,18 @@
             android:layout_width="wrap_content"
             android:layout_height="37dp"
             android:layout_marginBottom="5dp"
-            android:layout_weight=".6"
+            android:layout_weight=".1"
             android:text="@string/titleApp"
             android:textSize="25sp" />
+
+        <ImageButton
+            android:layout_marginTop="-5dp"
+            android:layout_marginRight="20dp"
+            android:layout_width="45dp"
+            android:layout_height="54dp"
+            android:onClick="deleteMessages"
+            android:background="@drawable/delete_all">
+        </ImageButton>
     </LinearLayout>
 
     <LinearLayout
