@@ -32,6 +32,10 @@ public class ChatMessageAdapter extends ArrayAdapter {
     this.userId = userId;
   }
 
+  public ArrayList<ChatMessage> getList() {
+    return new ArrayList<ChatMessage>(list);
+  }
+
   @Override
   public View getView(int position, View convertView, ViewGroup parent) {
     ChatMessage chatMessage = list.get(position);

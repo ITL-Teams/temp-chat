@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.example.tempchat.model.ChatMessage;
 import com.example.tempchat.service.AES;
+import com.example.tempchat.service.ChatDatabase;
 import com.example.tempchat.service.ChatMessageAdapter;
 import com.example.tempchat.service.ChatWebSocketListener;
 import com.example.tempchat.service.SocketUtils;
@@ -47,7 +48,14 @@ public class ChatActivity extends AppCompatActivity {
     socketOnMessage = new MessageHandler();
 
     message = (EditText) findViewById(R.id.message);
-    messages = new ChatMessageAdapter(this, new ArrayList<ChatMessage>());
+
+    if(GlobalConfig.SAVE_CHATS_ON_DISCONNECT)
+      messages = new ChatMessageAdapter(this, ChatDatabase.read(
+        GlobalConfig.chatCode,
+        this
+      ));
+    else
+      messages = new ChatMessageAdapter(this, new ArrayList<ChatMessage>());
 
     chat = (ListView) findViewById(R.id.chat);
     chat.invalidateViews();
@@ -73,6 +81,16 @@ public class ChatActivity extends AppCompatActivity {
   }
 
   public void disconnect(View view) {
+    // save user messages on disconnect
+    if(GlobalConfig.SAVE_CHATS_ON_DISCONNECT)
+      ChatDatabase.save(
+        messages.getList(),
+        GlobalConfig.chatCode,
+        this
+      );
+    else
+      ChatDatabase.delete(GlobalConfig.chatCode, this);
+
     // delete user messages on disconnect
     if(GlobalConfig.DELETE_MESSAGES_ON_DISCONNECT)
       for(int index = 0; index < messages.getCount(); index++) {

@@ -7,7 +7,9 @@ import com.example.tempchat.R;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class ChatMessage {
+import java.io.Serializable;
+
+public class ChatMessage implements Serializable {
   private String userId;
   private String messageId;
   private String username;
