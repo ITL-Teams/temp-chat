@@ -106,15 +106,15 @@ public class ChatActivity extends AppCompatActivity {
       deleteAll();
 
     if(GlobalConfig.SHOW_STATUS) {
-      String disconnectionMessage =
-              GlobalConfig.username + " " + getApplicationContext().getString(R.string.offline_user);
+      String disconnectionMessage = GlobalConfig.username + "OOOOOOdisconnect";
       ChatMessage userStatus = new ChatMessage(
               GlobalConfig.username,
               disconnectionMessage
       );
 
       disconnectionMessage = AES.encrypt(disconnectionMessage, GlobalConfig.encryptionKey);
-      userStatus.delete(disconnectionMessage);
+      userStatus.setContent(disconnectionMessage);
+
       socketUtils.sendMessage(userStatus);
     }
 
@@ -235,7 +235,22 @@ public class ChatActivity extends AppCompatActivity {
         ChatMessage chatMessage = messageFormatter.getChatMessage();
         String messageContent = chatMessage.getContent();
         messageContent = AES.decrypt(messageContent, GlobalConfig.encryptionKey);
-        chatMessage.setContent(messageContent);
+
+        System.out.println(chatMessage.isConnected());
+        System.out.println(chatMessage.getContent());
+
+        chatMessage.setConnected(chatMessage.getContent());
+        if(chatMessage.isConnected()) {
+          messageContent = messageContent + getApplicationContext().getString(R.string.online_user);
+          chatMessage.delete(messageContent); // format text not delete
+        }
+        else if(chatMessage.isDisconnected()) {
+          messageContent = messageContent + getApplicationContext().getString(R.string.offline_user);
+          chatMessage.delete(messageContent); // format text not delete
+        }
+        else
+          chatMessage.setContent(messageContent);
+
         messages.add(chatMessage);
       }
     }

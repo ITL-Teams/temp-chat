@@ -14,6 +14,8 @@ public class ChatMessage implements Serializable {
   private String time;
   private boolean delete;
   private boolean deleted;
+  private boolean connected;
+  private boolean disconnected;
 
   public ChatMessage(
           String username,
@@ -31,6 +33,8 @@ public class ChatMessage implements Serializable {
     this.messageId = messageId;
     this.delete = delete;
     this.deleted = false;
+    this.connected = false;
+    this.disconnected = false;
   }
 
   public ChatMessage(String username, String content) {
@@ -136,6 +140,22 @@ public class ChatMessage implements Serializable {
   public void delete(String deleteMessage) {
     deleted = true;
     content = "--" + deleteMessage + "--";
+  }
+
+  public void setConnected(String data) {
+    String[] _data = data.split("OOOOOO");
+    if(data.length() != 2)
+      return;
+
+    this.connected = _data[1].equals("connected");
+  }
+
+  public boolean isConnected() {
+    return connected;
+  }
+
+  public boolean isDisconnected() {
+    return disconnected;
   }
 
 }

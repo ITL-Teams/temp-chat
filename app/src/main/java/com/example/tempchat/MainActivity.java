@@ -157,15 +157,15 @@ public class MainActivity extends AppCompatActivity {
       socketListener.setOnMessageHandler(null);
 
       if(GlobalConfig.SHOW_STATUS) {
-        String connectionMessage =
-                GlobalConfig.username + " " + getApplicationContext().getString(R.string.online_user);
+        String connectionMessage = GlobalConfig.username + "OOOOOOconnect";
         ChatMessage userStatus = new ChatMessage(
           GlobalConfig.username,
           connectionMessage
         );
 
         connectionMessage = AES.encrypt(connectionMessage, GlobalConfig.encryptionKey);
-        userStatus.delete(connectionMessage);
+        userStatus.setContent(connectionMessage);
+
         socket.sendMessage(userStatus);
       }
 
