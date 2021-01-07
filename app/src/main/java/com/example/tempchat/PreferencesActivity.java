@@ -55,9 +55,12 @@ public class PreferencesActivity extends AppCompatActivity {
     else
       userPreferences.setServerAddress(server_address.getText().toString());
 
+    if(!save_connection_string.isChecked())
+      userPreferences.new ConnectionString().delete();
+
+    userPreferences.setSaveConnectionString(save_connection_string.isChecked());
     userPreferences.setShowStatus(show_status.isChecked());
     userPreferences.setDeleteMessagesOnDisconnect(delete_on_disconnect.isChecked());
-    userPreferences.setSaveConnectionString(save_connection_string.isChecked());
     userPreferences.setSaveChatsOnDisconnect(save_chats.isChecked());
 
     Toast.makeText(this, R.string.saved_preferences, Toast.LENGTH_SHORT).show();

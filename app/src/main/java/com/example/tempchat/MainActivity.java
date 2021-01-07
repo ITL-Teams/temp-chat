@@ -28,7 +28,8 @@ public class MainActivity extends AppCompatActivity {
                    username,
                    encryptionKey;
   private Handler socketOnConnect,
-                  socketOnFailure;
+                  socketOnFailure,
+                  socketOnMessage;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -47,10 +48,12 @@ public class MainActivity extends AppCompatActivity {
     encryptionKey = (EditText) findViewById(R.id.encryptionKey);
 
     socketOnConnect = new SocketOnConnect();
+    socketOnMessage = new SocketOnMessage();
     socketOnFailure = new SocketOnFailure();
 
     socketListener = new ChatWebSocketListener();
-    socketListener.setOnMessageHandler(socketOnConnect);
+    socketListener.setOnOpenHandler(socketOnConnect);
+    socketListener.setOnMessageHandler(socketOnMessage);
     socketListener.setOnFailureHandler(socketOnFailure);
 
     socket = new SocketUtils(socketListener);
@@ -60,6 +63,12 @@ public class MainActivity extends AppCompatActivity {
 
     GlobalConfig.socket = socket;
     GlobalConfig.socketListener = socketListener;
+
+    PreferenceService.ConnectionString connectionString = userPreferences.new ConnectionString();
+    String[] connectionStrings = connectionString.read();
+    username.setText(connectionStrings[connectionString.USERNAME]);
+    encryptionKey.setText(connectionStrings[connectionString.ENCRYPTION_KEY]);
+    chatCode.setText(connectionStrings[connectionString.CHAT_CODE]);
   }
 
   public void connect(View view) {
@@ -109,6 +118,19 @@ public class MainActivity extends AppCompatActivity {
   }
 
   private class SocketOnConnect extends Handler {
+    @Override
+    public void handleMessage(@NonNull Message msg) {
+      if(!GlobalConfig.SAVE_CONNECTION_STRING) return;
+      PreferenceService.ConnectionString connectionString = userPreferences.new ConnectionString();
+      connectionString.save(
+        username.getText().toString(),
+        encryptionKey.getText().toString(),
+        chatCode.getText().toString()
+      );
+    }
+  }
+
+  private class SocketOnMessage extends Handler {
     @Override
     public void handleMessage(@NonNull Message msg) {
       MessageFormatter messageFormatter = new MessageFormatter(msg);

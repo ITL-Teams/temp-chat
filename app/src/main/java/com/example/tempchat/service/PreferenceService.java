@@ -70,4 +70,37 @@ public class PreferenceService {
     editor.commit();
   }
 
+  public class ConnectionString {
+    public int USERNAME = 0;
+    public int ENCRYPTION_KEY = 1;
+    public int CHAT_CODE = 2;
+
+    public void save(
+      String username,
+      String encryptionKey,
+      String chatCode
+    ) {
+      saveString(username, "username");
+      saveString(encryptionKey, "encryptionKey");
+      saveString(chatCode, "chatCode");
+    }
+
+    public String[] read() {
+      return new String[] {
+       sharedPreferences.getString("username", ""),
+       sharedPreferences.getString("encryptionKey", ""),
+       sharedPreferences.getString("chatCode", "")
+      };
+    }
+
+    public void delete() {
+      SharedPreferences.Editor editor = sharedPreferences.edit();
+      editor.remove("username");
+      editor.remove("encryptionKey");
+      editor.remove("chatCode");
+      editor.commit();
+    }
+
+  }
+
 }
