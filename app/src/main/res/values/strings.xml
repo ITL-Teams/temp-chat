@@ -10,6 +10,7 @@
     <string name="codeChat">Chat Room Code</string>
     <string name="titleApp">TEMP-CHAT</string>
     <string name="sendMessage">New Message</string>
+    <string name="empty_message_alert">Empty messages not allowed</string>
 
     <string name="emptyField">Empty Field</string>
     <string name="emptyChatCodeAlert">Chat code cannot be empty</string>

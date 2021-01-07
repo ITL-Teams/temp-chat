@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">TempChat</string>
+
+    <string name="message">Escribe Algo</string>
+    <string name="send">Enviar</string>
+    <string name="disconnect">Desconectar</string>
+    <string name="userName">Nombre de usuario</string>
+    <string name="encryptionKey">Clave de cifrado</string>
+    <string name="connect">Conectar</string>
+    <string name="codeChat">Código de sala</string>
+    <string name="titleApp">TEMP-CHAT</string>
+    <string name="sendMessage">Mensaje Nuevo</string>
+    <string name="empty_message_alert">No se puede enviar un mensaje vacío</string>
+
+    <string name="emptyField">Campo Vacío</string>
+    <string name="emptyChatCodeAlert">El código de sala no puede estar vacío</string>
+    <string name="emptyUserNameAlert">El nombre de usuario no puede estar vacío</string>
+    <string name="emptyEncryptionKeyAlert">La clave de cifrado no puede estar vacia</string>
+
+    <string name="failedToConnectTitle">Fallo al conectar</string>
+    <string name="failedToConnectMessage">Ocurrio un fallo al intentar conectar con el servidor</string>
+
+    <string name="delete_message_title">Borrar Mensaje</string>
+    <string name="delete_message_body">¿Estas seguro que quieres eliminar?</string>
+    <string name="delete_for_everyone">ELIMINAR PARA TODOS</string>
+    <string name="delete_for_me">ELIMINAR PARA MI</string>
+    <string name="delete_message_negative_answer">CANCELAR</string>
+    <string name="message_deleted">Mensaje Eliminado</string>
+    <string name="no_messages_to_delete">No hay mensajes que eliminar</string>
+
+    <string name="user_preferences">Preferencias de Usuario</string>
+    <string name="server_address">Dirección del servidor</string>
+    <string name="show_status">Mostrar estado de conexión</string>
+    <string name="server_address_info">Info: Usa un servidor propio, o deja en blanco para usar el nuestro</string>
+    <string name="delete_messages_on_disconnect">Eliminar mensajes al desconectarte</string>
+    <string name="save_connection_string">Guardar los datos de conexión</string>
+    <string name="save_chats">Guardar los chats al desconectar</string>
+    <string name="mute">Silenciar notificaciones</string>
+    <string name="save_preferences">Guardar</string>
+    <string name="back">Atras</string>
+    <string name="saved_preferences">Se guardaron las preferencias</string>
+
+    <string name="online_user">se ha conectado</string>
+    <string name="offline_user">se ha desconectado</string>
+</resources>
