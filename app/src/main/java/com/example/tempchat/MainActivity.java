@@ -13,11 +13,13 @@ import android.view.WindowManager;
 import android.widget.EditText;
 
 import com.example.tempchat.service.ChatWebSocketListener;
+import com.example.tempchat.service.PreferenceService;
 import com.example.tempchat.service.SocketUtils;
 import com.example.tempchat.utils.GlobalConfig;
 import com.example.tempchat.utils.MessageFormatter;
 
 public class MainActivity extends AppCompatActivity {
+  private PreferenceService userPreferences;
   private SocketUtils socket;
   private ChatWebSocketListener socketListener;
   private EditText chatCode,
@@ -47,6 +49,9 @@ public class MainActivity extends AppCompatActivity {
     socketListener.setOnFailureHandler(socketOnFailure);
 
     socket = new SocketUtils(socketListener);
+
+    userPreferences = new PreferenceService(this);
+    userPreferences.loadPreferences();
 
     GlobalConfig.socket = socket;
     GlobalConfig.socketListener = socketListener;

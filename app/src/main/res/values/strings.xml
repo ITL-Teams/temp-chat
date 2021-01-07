@@ -17,7 +17,7 @@
     <string name="emptyEncryptionKeyAlert">Encryption key cannot be empty</string>
 
     <string name="failedToConnectTitle">Failed to connect</string>
-    <string name="failedToConnectMessage">Failed to connect with server after 10 seconds</string>
+    <string name="failedToConnectMessage">Failed to connect with server</string>
 
     <string name="delete_message_title">Delete Message</string>
     <string name="delete_message_body">Do you really want to delete?</string>
@@ -35,4 +35,5 @@
     <string name="save_chats">Save chats on disconnect</string>
     <string name="save_preferences">Save</string>
     <string name="back">Back</string>
+    <string name="saved_preferences">Preferences Saved</string>
 </resources>
