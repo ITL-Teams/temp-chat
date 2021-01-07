@@ -74,12 +74,13 @@ public class ChatActivity extends AppCompatActivity {
 
   public void disconnect(View view) {
     // delete user messages on disconnect
-    for(int index = 0; index < messages.getCount(); index++) {
-      ChatMessage message = (ChatMessage) messages.getItem(index);
+    if(GlobalConfig.DELETE_MESSAGES_ON_DISCONNECT)
+      for(int index = 0; index < messages.getCount(); index++) {
+        ChatMessage message = (ChatMessage) messages.getItem(index);
 
-      if(message.getUserId().equals(GlobalConfig.userId))
-        socketUtils.deleteMessage(message);
-    }
+        if(message.getUserId().equals(GlobalConfig.userId))
+          socketUtils.deleteMessage(message);
+      }
 
     if(GlobalConfig.SHOW_STATUS) {
       String disconnectionMessage =
