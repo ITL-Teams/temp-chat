@@ -12,6 +12,8 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
 
+import com.example.tempchat.model.ChatMessage;
+import com.example.tempchat.service.AES;
 import com.example.tempchat.service.ChatWebSocketListener;
 import com.example.tempchat.service.PreferenceService;
 import com.example.tempchat.service.SocketUtils;
@@ -33,10 +35,13 @@ public class MainActivity extends AppCompatActivity {
     // Disable App ScreenShot
     getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE,
                          WindowManager.LayoutParams.FLAG_SECURE);
-
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
+  }
 
+  @Override
+  protected void onStart() {
+    super.onStart();
     chatCode = (EditText) findViewById(R.id.chatCode);
     username = (EditText) findViewById(R.id.username);
     encryptionKey = (EditText) findViewById(R.id.encryptionKey);
@@ -118,6 +123,19 @@ public class MainActivity extends AppCompatActivity {
 
       socketListener.setOnFailureHandler(null);
       socketListener.setOnMessageHandler(null);
+
+      if(GlobalConfig.SHOW_STATUS) {
+        String connectionMessage =
+                GlobalConfig.username + " " + getApplicationContext().getString(R.string.online_user);
+        ChatMessage userStatus = new ChatMessage(
+          GlobalConfig.username,
+          connectionMessage
+        );
+
+        connectionMessage = AES.encrypt(connectionMessage, GlobalConfig.encryptionKey);
+        userStatus.delete(connectionMessage);
+        socket.sendMessage(userStatus);
+      }
 
       getApplicationContext().startActivity(goToChat);
     }

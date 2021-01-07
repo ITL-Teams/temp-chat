@@ -36,4 +36,7 @@
     <string name="save_preferences">Save</string>
     <string name="back">Back</string>
     <string name="saved_preferences">Preferences Saved</string>
+
+    <string name="online_user">is now online</string>
+    <string name="offline_user">left</string>
 </resources>

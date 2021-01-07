@@ -81,6 +81,19 @@ public class ChatActivity extends AppCompatActivity {
         socketUtils.deleteMessage(message);
     }
 
+    if(GlobalConfig.SHOW_STATUS) {
+      String disconnectionMessage =
+              GlobalConfig.username + " " + getApplicationContext().getString(R.string.offline_user);
+      ChatMessage userStatus = new ChatMessage(
+              GlobalConfig.username,
+              disconnectionMessage
+      );
+
+      disconnectionMessage = AES.encrypt(disconnectionMessage, GlobalConfig.encryptionKey);
+      userStatus.delete(disconnectionMessage);
+      socketUtils.sendMessage(userStatus);
+    }
+
     socketUtils.disconnect();
     messages.clear();
 
@@ -131,7 +144,7 @@ public class ChatActivity extends AppCompatActivity {
           getApplicationContext().getString(R.string.message_deleted)
         );
       }
-      else {
+      else if(messageFormatter.getMessageType() == MessageFormatter.MessageType.CHAT_MESSAGE) {
         ChatMessage chatMessage = messageFormatter.getChatMessage();
         String messageContent = chatMessage.getContent();
         messageContent = AES.decrypt(messageContent, GlobalConfig.encryptionKey);
