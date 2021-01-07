@@ -5,7 +5,6 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -74,8 +73,6 @@ public class ChatActivity extends AppCompatActivity {
   }
 
   public void disconnect(View view) {
-    Intent intentMainActivity = new Intent(this, MainActivity.class);
-
     // delete user messages on disconnect
     for(int index = 0; index < messages.getCount(); index++) {
       ChatMessage message = (ChatMessage) messages.getItem(index);
@@ -86,7 +83,8 @@ public class ChatActivity extends AppCompatActivity {
 
     socketUtils.disconnect();
     messages.clear();
-    startActivity(intentMainActivity);
+
+    finish();
   }
 
   public void sendMessage(View view) {

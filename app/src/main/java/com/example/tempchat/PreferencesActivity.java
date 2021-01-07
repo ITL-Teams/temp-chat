@@ -1,6 +1,5 @@
 package com.example.tempchat;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
@@ -47,8 +46,7 @@ public class PreferencesActivity extends AppCompatActivity {
   }
 
   public void back(View view) {
-    Intent backToMenu = new Intent(getApplicationContext(), MainActivity.class);
-    startActivity(backToMenu);
+    finish();
   }
   
   public void save(View view) {
