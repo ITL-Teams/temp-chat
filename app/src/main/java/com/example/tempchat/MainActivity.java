@@ -10,6 +10,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.tempchat.model.ChatMessage;
@@ -17,6 +18,7 @@ import com.example.tempchat.service.AES;
 import com.example.tempchat.service.ChatWebSocketListener;
 import com.example.tempchat.service.PreferenceService;
 import com.example.tempchat.service.SocketUtils;
+import com.example.tempchat.service.SoundService;
 import com.example.tempchat.utils.GlobalConfig;
 import com.example.tempchat.utils.MessageFormatter;
 
@@ -69,6 +71,13 @@ public class MainActivity extends AppCompatActivity {
     username.setText(connectionStrings[connectionString.USERNAME]);
     encryptionKey.setText(connectionStrings[connectionString.ENCRYPTION_KEY]);
     chatCode.setText(connectionStrings[connectionString.CHAT_CODE]);
+
+    SoundService.mute = GlobalConfig.MUTE_NOTIFICATIONS;
+
+    if(GlobalConfig.MUTE_NOTIFICATIONS) {
+      Button connect = (Button) findViewById(R.id.connect);
+      connect.setSoundEffectsEnabled(true);
+    }
   }
 
   public void connect(View view) {
@@ -120,6 +129,7 @@ public class MainActivity extends AppCompatActivity {
   private class SocketOnConnect extends Handler {
     @Override
     public void handleMessage(@NonNull Message msg) {
+      SoundService.connect(getApplicationContext());
       if(!GlobalConfig.SAVE_CONNECTION_STRING) return;
       PreferenceService.ConnectionString connectionString = userPreferences.new ConnectionString();
       connectionString.save(

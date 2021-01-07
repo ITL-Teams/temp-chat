@@ -16,6 +16,7 @@ public class GlobalConfig {
   public static boolean DELETE_MESSAGES_ON_DISCONNECT = true;
   public static boolean SAVE_CONNECTION_STRING = false;
   public static boolean SAVE_CHATS_ON_DISCONNECT = false;
+  public static boolean MUTE_NOTIFICATIONS = false;
 
   // Run time variables
   public static String userId;

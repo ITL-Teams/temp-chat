@@ -33,6 +33,7 @@
     <string name="delete_messages_on_disconnect">Delete messages on disconnect</string>
     <string name="save_connection_string">Save connection string</string>
     <string name="save_chats">Save chats on disconnect</string>
+    <string name="mute">Mute Notifications</string>
     <string name="save_preferences">Save</string>
     <string name="back">Back</string>
     <string name="saved_preferences">Preferences Saved</string>

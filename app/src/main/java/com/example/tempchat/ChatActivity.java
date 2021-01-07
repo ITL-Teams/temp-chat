@@ -10,6 +10,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -20,6 +21,7 @@ import com.example.tempchat.service.ChatDatabase;
 import com.example.tempchat.service.ChatMessageAdapter;
 import com.example.tempchat.service.ChatWebSocketListener;
 import com.example.tempchat.service.SocketUtils;
+import com.example.tempchat.service.SoundService;
 import com.example.tempchat.utils.GlobalConfig;
 import com.example.tempchat.utils.MessageFormatter;
 
@@ -31,8 +33,7 @@ public class ChatActivity extends AppCompatActivity {
   private SocketUtils socketUtils;
   private ChatWebSocketListener socketListener;
   private ChatMessageAdapter messages;
-  private Handler socketOnMessage,
-                  socketOnClose;
+  private Handler socketOnMessage;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -78,9 +79,18 @@ public class ChatActivity extends AppCompatActivity {
     });
 
     socketListener.setOnMessageHandler(socketOnMessage);
+
+    if(GlobalConfig.MUTE_NOTIFICATIONS) {
+      Button button = (Button) findViewById(R.id.send);
+      button.setSoundEffectsEnabled(true);
+
+      button = (Button) findViewById(R.id.disconnect);
+      button.setSoundEffectsEnabled(true);
+    }
   }
 
   public void disconnect(View view) {
+    SoundService.disconnect(this);
     // save user messages on disconnect
     if(GlobalConfig.SAVE_CHATS_ON_DISCONNECT)
       ChatDatabase.save(
@@ -164,6 +174,7 @@ public class ChatActivity extends AppCompatActivity {
         );
       }
       else if(messageFormatter.getMessageType() == MessageFormatter.MessageType.CHAT_MESSAGE) {
+        SoundService.newMessage(getApplicationContext());
         ChatMessage chatMessage = messageFormatter.getChatMessage();
         String messageContent = chatMessage.getContent();
         messageContent = AES.decrypt(messageContent, GlobalConfig.encryptionKey);

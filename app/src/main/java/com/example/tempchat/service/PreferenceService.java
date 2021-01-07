@@ -12,6 +12,7 @@ public class PreferenceService {
   private String DELETE_MESSAGES_ON_DISCONNECT_KEY = "delete_messages";
   private String SAVE_CONNECTION_STRING_KEY = "save_connection";
   private String SAVE_CHATS_ON_DISCONNECT_KEY = "save_chats";
+  private String MUTE_NOTIFICATIONS_KEY = "mute_notifications";
 
   public PreferenceService(Context context) {
     sharedPreferences = context.getSharedPreferences(
@@ -45,6 +46,11 @@ public class PreferenceService {
     GlobalConfig.SAVE_CHATS_ON_DISCONNECT = chatsOnDisconnect;
   }
 
+  public void setMuteNotifications(boolean muteNotifications) {
+    saveBoolean(muteNotifications, MUTE_NOTIFICATIONS_KEY);
+    GlobalConfig.MUTE_NOTIFICATIONS = muteNotifications;
+  }
+
   public void loadPreferences() {
     GlobalConfig.SERVER_ADDRESS =
             sharedPreferences.getString(SERVER_ADDRESS_KEY, GlobalConfig.DEFAULT_SERVER_ADDRESS);
@@ -56,6 +62,8 @@ public class PreferenceService {
             sharedPreferences.getBoolean(SAVE_CONNECTION_STRING_KEY, false);
     GlobalConfig.SAVE_CHATS_ON_DISCONNECT =
             sharedPreferences.getBoolean(SAVE_CHATS_ON_DISCONNECT_KEY, false);
+    GlobalConfig.MUTE_NOTIFICATIONS =
+            sharedPreferences.getBoolean(MUTE_NOTIFICATIONS_KEY, false);
   }
 
   private void saveString(String string, String key) {

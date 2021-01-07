@@ -57,7 +57,7 @@
 
     <CheckBox
         android:id="@+id/show_status"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:textSize="15dp"
         android:textStyle="bold"
         android:textColor="#555"
@@ -67,7 +67,7 @@
 
     <CheckBox
         android:id="@+id/delete_on_disconnect"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:textSize="15dp"
         android:textStyle="bold"
         android:textColor="#555"
@@ -78,7 +78,7 @@
 
     <CheckBox
         android:id="@+id/save_connection_string"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:textSize="15dp"
         android:textStyle="bold"
         android:textColor="#555"
@@ -88,13 +88,23 @@
 
     <CheckBox
         android:id="@+id/save_chats"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:textSize="15dp"
         android:textStyle="bold"
         android:textColor="#555"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/save_chats" />
+
+    <CheckBox
+        android:id="@+id/mute"
+        android:layout_marginTop="10dp"
+        android:textSize="15dp"
+        android:textStyle="bold"
+        android:textColor="#555"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/mute" />
 
     <LinearLayout
         android:layout_width="match_parent"
