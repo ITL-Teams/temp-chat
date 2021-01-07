@@ -144,10 +144,13 @@ public class ChatMessage implements Serializable {
 
   public void setConnected(String data) {
     String[] _data = data.split("OOOOOO");
-    if(data.length() != 2)
+    if(_data.length != 2)
       return;
-
-    this.connected = _data[1].equals("connected");
+    
+    if(_data[1].equals("connect"))
+      this.connected = true;
+    else
+      this.disconnected = true;
   }
 
   public boolean isConnected() {

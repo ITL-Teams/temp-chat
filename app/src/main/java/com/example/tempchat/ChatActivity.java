@@ -236,18 +236,19 @@ public class ChatActivity extends AppCompatActivity {
         String messageContent = chatMessage.getContent();
         messageContent = AES.decrypt(messageContent, GlobalConfig.encryptionKey);
 
-        System.out.println(chatMessage.isConnected());
-        System.out.println(chatMessage.getContent());
+        chatMessage.setConnected(messageContent);
 
-        chatMessage.setConnected(chatMessage.getContent());
-        if(chatMessage.isConnected()) {
-          messageContent = messageContent + getApplicationContext().getString(R.string.online_user);
-          chatMessage.delete(messageContent); // format text not delete
-        }
-        else if(chatMessage.isDisconnected()) {
-          messageContent = messageContent + getApplicationContext().getString(R.string.offline_user);
-          chatMessage.delete(messageContent); // format text not delete
-        }
+        if(chatMessage.isConnected())
+          chatMessage.delete(
+            chatMessage.getUserName() + " " +
+                         getApplicationContext().getString(R.string.online_user)
+          ); // format text not delete
+
+        else if(chatMessage.isDisconnected())
+          chatMessage.delete(
+                  chatMessage.getUserName() + " " +
+                          getApplicationContext().getString(R.string.offline_user)
+          ); // format text not delete
         else
           chatMessage.setContent(messageContent);
 
