@@ -157,6 +157,16 @@ public class ChatActivity extends AppCompatActivity {
 
   public void sendMessage(View view) {
     String message_content = this.message.getText().toString();
+
+    if(message_content.isEmpty()) {
+      Toast.makeText(
+              this,
+              this.getString(R.string.empty_message_alert),
+              Toast.LENGTH_LONG
+      ).show();
+      return;
+    }
+
     message_content = AES.encrypt(message_content, GlobalConfig.encryptionKey);
 
     ChatMessage message = new ChatMessage(
