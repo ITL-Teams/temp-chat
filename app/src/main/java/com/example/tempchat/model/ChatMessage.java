@@ -1,9 +1,5 @@
 package com.example.tempchat.model;
 
-import androidx.annotation.StringRes;
-
-import com.example.tempchat.R;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 

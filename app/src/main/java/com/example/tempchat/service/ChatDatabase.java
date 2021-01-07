@@ -3,9 +3,7 @@ package com.example.tempchat.service;
 import android.content.Context;
 
 import com.example.tempchat.model.ChatMessage;
-import com.example.tempchat.utils.Logger;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
